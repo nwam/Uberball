@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MainMenuUtils : MonoBehaviour {
 	private const string SELECTED_CHARACTER = "character";
@@ -9,6 +10,7 @@ public class MainMenuUtils : MonoBehaviour {
 	public GameObject levelSelect;
 	public GameObject characterSelect;
 	public GameObject options;
+	public GameObject unlockPrompt;
 
 	public void openLevelSelect() {
 		mainMenu.SetActive (false);
@@ -40,6 +42,17 @@ public class MainMenuUtils : MonoBehaviour {
 	public void selectCharacter(string materialName) {
 		PlayerPrefs.SetString (SELECTED_CHARACTER, "ball/" + materialName);
 		EventSystem.current.currentSelectedGameObject.transform.parent.parent.Find ("Hilighter").transform.position = EventSystem.current.currentSelectedGameObject.transform.position;
+	}
+
+	public void displayUnlockPrompt(string name, string type, Texture image){
+		unlockPrompt.transform.Find ("Name").GetComponent<Text> ().text = name;
+		unlockPrompt.transform.Find ("Title").GetComponent<Text> ().text = "New " + type + " Unlocked!";
+		unlockPrompt.transform.Find ("Image").GetComponent<RawImage> ().texture = image;
+		unlockPrompt.SetActive (true);
+	}
+
+	public void hideUnlockPrompt(){
+		unlockPrompt.SetActive (false);
 	}
 
 	public void resetProgress(){
