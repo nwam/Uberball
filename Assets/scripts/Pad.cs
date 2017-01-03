@@ -10,14 +10,9 @@ public class Pad : MonoBehaviour {
 		setDirection ();
 	}
 
-	public virtual void setDirection(){
+	protected virtual void setDirection(){
 	}
 
-	public Vector3 getDirection() {
-		return direction;
-	}
-
-	public float getPower(){
-		return power;
+	public virtual void effect(GameObject player){
 	}
 }

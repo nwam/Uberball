@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Unlockable : MonoBehaviour {
 	public string[] keyHoles;
-	public string name;
+	public string uName;
 	public string type;
 	public Texture image;
 	private string promptKey;
@@ -11,7 +11,7 @@ public class Unlockable : MonoBehaviour {
 	private const string PROMPT_KEY_PREFIX = "prompt_";
 
 	void Start(){
-		promptKey = PROMPT_KEY_PREFIX + type + "_" + name;
+		promptKey = PROMPT_KEY_PREFIX + type + "_" + uName;
 
 		// enable unlock if unlocked
 		if (!has_keys ()) {
@@ -21,7 +21,7 @@ public class Unlockable : MonoBehaviour {
 			// display new unlock prompt
 			if (!PlayerPrefs.HasKey (promptKey)) {
 				PlayerPrefs.SetInt (promptKey, 1);
-				GameObject.FindObjectOfType<MainMenuUtils> ().displayUnlockPrompt (name, type, image);
+				GameObject.FindObjectOfType<MainMenuUtils> ().displayUnlockPrompt (uName, type, image);
 			}
 		}
 	}

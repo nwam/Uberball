@@ -46,6 +46,7 @@ public class PlayerController : InputController {
 	// Called before any physics calculations
 	public override void applyInputFixed() {
 
+		Time.timeScale = 1.5f;
 		// get direction
 		Vector3 direction = GetDirection();
 
@@ -80,7 +81,11 @@ public class PlayerController : InputController {
 		float cosYRot = Mathf.Cos (yRotation);
 		Vector3 vDirection = new Vector3 (sinYRot, 0.0f, cosYRot);
 		Vector3 hDirection = new Vector3 (cosYRot, 0.0f, -sinYRot);
-		return (v*vDirection + h*hDirection).normalized;
+
+		Vector3 direction = v * vDirection + h * hDirection;
+		if (direction.magnitude > 1)
+			direction.Normalize (); 
+		return direction;
 	}
 		
 	private bool isGrounded(){

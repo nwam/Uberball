@@ -4,13 +4,6 @@ using System.Collections;
 // controls what happens when player interacts with trigger objects
 public class PlayerTriggers : MonoBehaviour {
 
-	private Rigidbody rb;
-
-	// Use this for initialization
-	void Start () {
-		rb = GetComponent<Rigidbody> ();
-	}
-
 	// Update is called once per frame
 	void Update () {
 	
@@ -54,15 +47,31 @@ public class PlayerTriggers : MonoBehaviour {
 			levelManager.resetLevel ();
 		}
 
+		if (obj.CompareTag ("DescretePad")) { 
+			Pad pad = obj.GetComponent<Pad> ();
+			pad.effect (gameObject);
+		}
+
 	}
 
 	void OnTriggerStay(Collider col) {
 		GameObject obj = col.gameObject;
 
 		// pads act continuously
-		if (obj.CompareTag ("Pad")) {
+		if (obj.CompareTag ("ContinuousPad")) {
 			Pad pad = obj.GetComponent<Pad> ();
-			rb.AddForce (pad.getDirection() * pad.getPower());
+			pad.effect (gameObject);
 		}
 	}
+
+	void OnTriggerLeave(Collider col){
+		GameObject obj = col.gameObject;
+
+		// pads act continuously
+		if (obj.CompareTag ("ContinuousPad")) {
+			BoostPad pad = obj.GetComponent<BoostPad> ();
+			pad.slowDown (gameObject);
+		}
+	}
+
 }
