@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BouncePad : Pad {
 
-	public float resetTime;
+	public float resetTime = 0.1f;
 	private float lastEffect = 0;
 
 	// Direction is always the local Y coordinate of the pad

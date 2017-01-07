@@ -85,6 +85,11 @@ public class PlayerController : InputController {
 		Vector3 direction = v * vDirection + h * hDirection;
 		if (direction.magnitude > 1)
 			direction.Normalize (); 
+
+		//clamp magnitude to 1
+		if (direction.magnitude > 1) {
+			direction.Normalize ();
+		}
 		return direction;
 	}
 		
