@@ -8,6 +8,8 @@ public class PlayerPrefsText : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gameObject.GetComponent<Text> ().text = PlayerPrefs.GetInt (playerPref).ToString();
+		if (PlayerPrefs.HasKey (playerPref)) {
+			gameObject.GetComponent<Text> ().text = PlayerPrefs.GetInt (playerPref).ToString ();
+		}			
 	}
 }
