@@ -24,8 +24,11 @@ public class PlayerController : InputController {
 
 	private PowerupManager powerupManager;
 
+	public Vector3 spawnPosition;
+
 	// Use this for initialization
 	protected override void afterStart () {
+		transform.position = spawnPosition;
 		setAsActiveInputController ();
 		rb = GetComponent<Rigidbody>();
 		powerupManager = GameObject.FindObjectOfType<PowerupManager> (); 

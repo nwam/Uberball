@@ -44,7 +44,7 @@ public class PlayerTriggers : MonoBehaviour {
 
 		if (obj.CompareTag ("Respawn")) {
 			LevelManager levelManager = (LevelManager)GameObject.FindObjectOfType<LevelManager> ();
-			levelManager.resetLevel ();
+			levelManager.softReset ();
 		}
 
 		if (obj.CompareTag ("DescretePad")) { 

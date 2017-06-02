@@ -2,22 +2,22 @@
 using System.Collections;
 
 // controls which inputController to apply the input to
-public class InputManager : MonoBehaviour {
+public class InputManager : Singleton<InputManager> {
 
 	private InputController activeController;
-
+	private bool allowInput;
 
 	// Update is called once per frame
 	void Update () {
 		// TODO : try catch?
-		if (activeController != null) {
+		if (allowInput && activeController != null) {
 			activeController.applyInput ();
 		}
 	}
 
 	void FixedUpdate () {
 		// TODO : try catch?
-		if (activeController != null) {
+		if (allowInput && activeController != null) {
 			activeController.applyInputFixed ();
 		}
 	}
@@ -31,4 +31,15 @@ public class InputManager : MonoBehaviour {
 		// set new controller
 		activeController = i;
 	}
+
+
+	public void enableInput(){
+		allowInput = true;
+	}
+
+	public void disableInput(){
+		allowInput = false;
+	}
+
+
 }
