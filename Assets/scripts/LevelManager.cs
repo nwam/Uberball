@@ -67,6 +67,7 @@ public class LevelManager : Singleton<LevelManager> {
 	public void complete(){
 		gameState = GameState.complete;
 		InputManager.Instance.disableInput ();
+		GUIManager.Instance.activateFinish ();
 	}
 
 }
