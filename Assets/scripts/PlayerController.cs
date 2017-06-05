@@ -24,11 +24,8 @@ public class PlayerController : InputController {
 
 	private PowerupManager powerupManager;
 
-	public Vector3 spawnPosition;
-
 	// Use this for initialization
 	protected override void afterStart () {
-		transform.position = spawnPosition;
 		setAsActiveInputController ();
 		rb = GetComponent<Rigidbody>();
 		powerupManager = GameObject.FindObjectOfType<PowerupManager> (); 
@@ -99,6 +96,7 @@ public class PlayerController : InputController {
 	private bool isGrounded(){
 		return Physics.Raycast(transform.position, Vector3.down, distToGround);
 	}
+		
 
 	// functions for orbit camera
 	public bool IsFlying(){

@@ -18,7 +18,7 @@ public class OneGo : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		Instantiate (go, GameObject.Find("Canvas").transform);
+		Instantiate (go, Vector3.zero, Quaternion.Euler(Vector3.zero), GameObject.Find("Canvas").transform);
 		LevelManager.Instance.play ();
 	}
 

@@ -21,6 +21,8 @@ public class GoalCollectable : MonoBehaviour {
 	}
 
 	public void getCollected() {
+		LevelManager.Instance.complete ();
+
 		gameObject.SetActive (false);
 		scoreController.stop ();
 

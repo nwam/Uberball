@@ -12,7 +12,7 @@ public class LevelManager : Singleton<LevelManager> {
 		complete
 	};
 
-	private GameState gameState { get; set;}
+	public GameState gameState { get; set;}
 
 	void Start() {
 		gameState = GameState.countdown;//should be intro
@@ -44,22 +44,29 @@ public class LevelManager : Singleton<LevelManager> {
 	}
 
 	// goes to countdown state
-	public void softReset() {
+/*	public void softReset() {
 		gameState = GameState.countdown;
 		ScoreController.Instance.resetScore ();
 		ScoreController.Instance.stop ();
 		InputManager.Instance.disableInput ();
 	}
-
+*/
+	// action is happening
 	public void play(){
 		gameState = GameState.playing;
 		ScoreController.Instance.resume ();
 		InputManager.Instance.enableInput ();
 	}
 
+	// pause menu
 	public void pause(){
 
 	}
 
+	// level complete/ score gui
+	public void complete(){
+		gameState = GameState.complete;
+		InputManager.Instance.disableInput ();
+	}
 
 }
