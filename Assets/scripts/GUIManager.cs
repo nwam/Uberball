@@ -8,6 +8,8 @@ public class GUIManager : Singleton<GUIManager> {
 	public GameObject finish;
 	public GameObject countdown;
 
+	public Animator highscoresTable;
+
 	public void activateContdown(){
 		countdown.SetActive (true);
 	}
@@ -15,4 +17,5 @@ public class GUIManager : Singleton<GUIManager> {
 	public void activateFinish(){
 		finish.SetActive (true);
 	}
+	
 }

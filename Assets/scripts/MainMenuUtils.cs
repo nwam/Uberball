@@ -39,8 +39,8 @@ public class MainMenuUtils : MonoBehaviour {
 		SceneManager.LoadScene (levelName);
 	}
 
-	public void selectCharacter(string materialName) {
-		PlayerPrefs.SetString (SELECTED_CHARACTER, "ball/" + materialName);
+	public void selectCharacter(string characterName) {
+		PlayerPrefs.SetString (SELECTED_CHARACTER, characterName);
 		EventSystem.current.currentSelectedGameObject.transform.parent.parent.Find ("Hilighter").transform.position = EventSystem.current.currentSelectedGameObject.transform.position;
 	}
 
