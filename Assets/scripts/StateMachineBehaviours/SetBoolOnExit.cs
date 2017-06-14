@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetBoolOnExit : StateMachineBehaviour {
 
-	public string name;
+	public string parameterName;
 	public bool value;
 
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -19,7 +19,7 @@ public class SetBoolOnExit : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		animator.SetBool (name, value);
+		animator.SetBool (parameterName, value);
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

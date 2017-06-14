@@ -4,13 +4,13 @@ using System.Collections;
 
 public class GoalCollectable : MonoBehaviour {
 
-	GoalUnlocker goalUnlocker;
-	ScoreUnlocker scoreUnlocker;
+	GoalUnlocker[] goalUnlockers;
+	ScoreUnlocker[] scoreUnlockers;
 
 	// Use this for initialization
 	void Start () {
-		goalUnlocker = GetComponent<GoalUnlocker> ();
-		scoreUnlocker = GetComponent<ScoreUnlocker> ();
+		goalUnlockers = GetComponents<GoalUnlocker> ();
+		scoreUnlockers = GetComponents<ScoreUnlocker> ();
 	}
 	
 	// Update is called once per frame
@@ -23,24 +23,21 @@ public class GoalCollectable : MonoBehaviour {
 
 		gameObject.SetActive (false);
 		ScoreController.Instance.stop ();
-
-		// unlock unlockables
-		if (goalUnlocker != null) {
-			goalUnlocker.unlock (); 
-		}
-
-
-		if (scoreUnlocker != null) {
-			scoreUnlocker.check_score (ScoreController.Instance.getScore ());
-		}
-
 		ScoreController.Instance.submitScore ();
 
-		// check if all gems collected
-		// TODO: move to another class, this doesnt belong here
-		string levelGemsCollected = SceneManager.GetActiveScene ().name + "_gems";
-		if (!PlayerPrefs.HasKey(levelGemsCollected) && GameObject.FindGameObjectWithTag ("Points") == null) {
-			PlayerPrefs.SetInt (levelGemsCollected, 1);
+		// unlock unlockables
+		foreach (GoalUnlocker goalUnlocker in goalUnlockers){
+			goalUnlocker.unlock (); 
 		}
+		foreach (ScoreUnlocker scoreUnlocker in scoreUnlockers){
+			scoreUnlocker.maybeUnlock (ScoreController.Instance.getScore ());
+		}
+
+		// unlock gemblems
+		GameObject.FindObjectOfType<GemblemCollectorUnlocker>().maybeUnlock();
+
+
+
+
 	}
 }

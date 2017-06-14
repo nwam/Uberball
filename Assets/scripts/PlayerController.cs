@@ -37,14 +37,14 @@ public class PlayerController : InputController {
 		
 	// called every frame when this is the active InputController
 	public override void applyInput() {
-		h = Input.GetAxis ("Horizontal");
-		v = Input.GetAxis ("Vertical");
-		j = Input.GetAxis ("Jump");
-
 	}
 
 	// Called before any physics calculations
 	public override void applyInputFixed() {
+
+		h = Input.GetAxis ("Horizontal");
+		v = Input.GetAxis ("Vertical");
+		j = Input.GetAxis ("Jump");
 
 		Time.timeScale = 1.5f;
 		// get direction

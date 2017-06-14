@@ -33,10 +33,7 @@ public class HighscoreTable : MonoBehaviour {
 	private GameObject panel4;
 	private GameObject panel5;
 
-	private Image darken;
-
 	void Start() {
-		darken = GameObject.Find ("Canvas/Darken").GetComponent<Image> ();
 		title = transform.FindDeepChild ("title").gameObject;
 		score1 = transform.FindDeepChild ("score1").gameObject;
 		score2 = transform.FindDeepChild ("score2").gameObject;
