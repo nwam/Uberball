@@ -23,8 +23,8 @@ public class GemblemUnlocker : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		key = SceneManager.GetActiveScene ().name + GEMBLEM_PREFIX + missionType;
 		setMissionType ();
+		key = SceneManager.GetActiveScene ().name + GEMBLEM_PREFIX + missionType.ToString();
 	}
 
 
@@ -32,7 +32,7 @@ public class GemblemUnlocker : MonoBehaviour {
 	private bool unlock() {
 
 		if (!PlayerPrefs.HasKey (key)) {
-			showAnimation ();
+			PlayerPrefs.SetInt (key, UNLOCK);
 			return true;
 		}
 
@@ -42,7 +42,7 @@ public class GemblemUnlocker : MonoBehaviour {
 		
 
 	public void maybeUnlock(){
-		bool first_time_unlocked = true;
+		bool first_time_unlocked = false;
 		bool unlocked = false;
 
 		if (unlockCondition ()) {
@@ -50,8 +50,11 @@ public class GemblemUnlocker : MonoBehaviour {
 			unlocked = true;
 		}
 
+		// for animations
 		if (!first_time_unlocked || !unlocked) {
 			skipAnimation ();
+		} else {
+			showAnimation ();
 		}
 	}
 
