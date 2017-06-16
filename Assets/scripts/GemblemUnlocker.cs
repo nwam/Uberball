@@ -26,20 +26,22 @@ public class GemblemUnlocker : MonoBehaviour {
 		setMissionType ();
 		key = SceneManager.GetActiveScene ().name + GEMBLEM_PREFIX + missionType.ToString();
 	}
-
+		
+	private bool isUnlocked(){
+		return PlayerPrefs.HasKey (key);
+	}
 
 	// returns true if it is the first time getting the gemblem
 	private bool unlock() {
 
-		if (!PlayerPrefs.HasKey (key)) {
+		if (!isUnlocked()) {
 			PlayerPrefs.SetInt (key, UNLOCK);
 			return true;
 		}
 
 		PlayerPrefs.SetInt (key, UNLOCK);
 		return false;
-	}
-		
+	}		
 
 	public void maybeUnlock(){
 		bool first_time_unlocked = false;
@@ -70,7 +72,18 @@ public class GemblemUnlocker : MonoBehaviour {
 	}
 
 	private void showAnimation(){
-		GetComponent<Animator>().SetBool (ANIMATOR_SHOW, true);
+		GetComponent<Animator> ().SetBool (ANIMATOR_SHOW, true);
+	}
+
+	public static int countUnlockedGemblems(string level){
+		int numUnlockedGemblems = 0;
+		foreach (MissionType missionType in System.Enum.GetValues(typeof(MissionType))){
+			if (PlayerPrefs.HasKey(level + GEMBLEM_PREFIX + missionType.ToString())){
+				numUnlockedGemblems = numUnlockedGemblems + 1;
+			}
+		}
+
+		return numUnlockedGemblems;
 	}
 
 }
