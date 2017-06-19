@@ -14,6 +14,7 @@ public class GemblemUnlocker : MonoBehaviour {
 	private const string GEMBLEM_PREFIX = "gemblem";
 	private const string ANIMATOR_SHOW = "show";
 	private const string ANIMATOR_SKIP = "skip";
+	protected bool doAnimations;
 
 
 	private string key;
@@ -23,6 +24,7 @@ public class GemblemUnlocker : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		doAnimations = true;
 		setMissionType ();
 		key = SceneManager.GetActiveScene ().name + GEMBLEM_PREFIX + missionType.ToString();
 	}
@@ -53,10 +55,12 @@ public class GemblemUnlocker : MonoBehaviour {
 		}
 
 		// for animations
-		if (!first_time_unlocked || !unlocked) {
-			skipAnimation ();
-		} else {
-			showAnimation ();
+		if (doAnimations) {
+			if (!first_time_unlocked || !unlocked) {
+				skipAnimation ();
+			} else {
+				showAnimation ();
+			}
 		}
 	}
 

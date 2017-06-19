@@ -29,6 +29,8 @@ public class RankManager : Singleton<RankManager> {
 	private int currentScore;
 	private bool incrementScoreDisplay;
 
+	public Animator nextAnimation;
+
 	// Use this for initialization
 	void Start () {
 		rankBounds = new int[8] {
@@ -88,7 +90,9 @@ public class RankManager : Singleton<RankManager> {
 
 	public void maybeRunAnimations(){
 		if (gotNewRecord ()) {
-			StartCoroutine(runNewRecordAnimations ());
+			StartCoroutine (runNewRecordAnimations ());
+		} else {
+			nextAnimation.enabled = true;
 		}
 	}
 
@@ -103,6 +107,12 @@ public class RankManager : Singleton<RankManager> {
 		for (int rankIndex = oldRank; rankIndex >= newRank; rankIndex--) {
 			rankObjects [rankIndex].SetActive (true);
 		} 
+
+		// unlock over-zero gemblem
+		if (oldRecord < 0 && newRecord >= 0) {
+			rankObjects [(int)Rank.bronze].GetComponent<GemblemOverZeroUnlocker> ().maybeUnlock ();
+			rankObjects [newRank].GetComponent<Animator> ().SetBool ("gemblemOverZeroAwarded", true);
+		}
 
 		// enable the score display as well
 		scoreDisplay.enabled = true;
