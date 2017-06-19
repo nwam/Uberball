@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class RankManager : Singleton<RankManager> {
 	private const float OLD_RANK_WAIT = 2.5f;
-	private const int SCORE_DISPLAY_INCREASE = 1;
+	private const int SCORE_DISPLAY_INCREASE_FRAMES = 500;
+	private const float SCORE_DISPLAY_INCREASE_MAX = 3.5f;
+	private const float SCORE_DISPLAY_INCREASE_MIN = 0.25f;
 
 	private enum Rank {platinum, gold, silver, bronze, green, purple, blue, white};
 
@@ -20,13 +22,14 @@ public class RankManager : Singleton<RankManager> {
 	public int blue;
 	public int white;
 
-	public Text scoreDisplay;
-	private int scoreDisplayValue;
-	private int rankDisplayIndex;
-
 	private int oldRecord;
 	private int newRecord;
 	private int currentScore;
+
+	public Text scoreDisplay;
+	private float scoreDisplayValue;
+	private float scoreDisplayIncrease;
+	private int rankDisplayIndex;
 	private bool incrementScoreDisplay;
 
 	public GameObject newRecordText;
@@ -103,8 +106,14 @@ public class RankManager : Singleton<RankManager> {
 		int oldRank = getRankIndex (oldRecord);
 		int newRank = getRankIndex (newRecord);
 
-		scoreDisplayValue = oldRecord < rankBounds [(int)Rank.white] ? rankBounds [(int)Rank.white] : oldRecord;
+		scoreDisplayValue = (float) (oldRecord < rankBounds [(int)Rank.white] ? rankBounds [(int)Rank.white] : oldRecord);
 		rankDisplayIndex = oldRank;
+
+		scoreDisplayIncrease = Mathf.Max(
+			SCORE_DISPLAY_INCREASE_MIN,
+			Mathf.Min(
+				SCORE_DISPLAY_INCREASE_MAX,
+				(float)((float) (newRecord - oldRecord)) / SCORE_DISPLAY_INCREASE_FRAMES));
 
 		// enable rank objects that we will be using
 		for (int rankIndex = oldRank; rankIndex >= newRank; rankIndex--) {
@@ -113,7 +122,7 @@ public class RankManager : Singleton<RankManager> {
 
 		// enable the score display
 		scoreDisplay.enabled = true;
-		scoreDisplay.text = scoreDisplayValue.ToString ();
+		scoreDisplay.text = ((int) (scoreDisplayValue)).ToString ();
 		newRecordText.SetActive (true);
 
 		// start by displaying the old rank for a few seconds
@@ -143,16 +152,16 @@ public class RankManager : Singleton<RankManager> {
 			}
 
 			// increment score
-			scoreDisplayValue = scoreDisplayValue + SCORE_DISPLAY_INCREASE;
+			scoreDisplayValue = scoreDisplayValue + scoreDisplayIncrease;
 
 			// check if new score (display) has been reached
 			if (scoreDisplayValue >= newRecord) {
-				scoreDisplayValue = newRecord;
+				scoreDisplayValue = (float) newRecord;
 				rankObjects [rankDisplayIndex].GetComponent<Animator> ().SetBool ("scoreDoneIncrease", true);
 				incrementScoreDisplay = false;
 			} 
 
-			scoreDisplay.text = scoreDisplayValue.ToString();
+			scoreDisplay.text = ((int) (scoreDisplayValue)).ToString();
 		}
 	}
 

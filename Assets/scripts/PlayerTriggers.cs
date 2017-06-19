@@ -56,6 +56,11 @@ public class PlayerTriggers : MonoBehaviour {
 			pad.effect (gameObject);
 		}
 
+		if (obj.CompareTag("Treasure")){
+			TreasureCollectable treasure = obj.GetComponent<TreasureCollectable>();
+			treasure.getCollected();
+		}
+
 	}
 
 	void OnTriggerStay(Collider col) {
