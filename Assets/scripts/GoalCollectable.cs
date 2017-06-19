@@ -23,6 +23,7 @@ public class GoalCollectable : MonoBehaviour {
 
 		gameObject.SetActive (false);
 		ScoreController.Instance.stop ();
+		ScoreController.Instance.freeze ();
 		ScoreController.Instance.submitScore ();
 
 		// unlock unlockables
@@ -36,9 +37,5 @@ public class GoalCollectable : MonoBehaviour {
 		// unlock gemblems
 		GameObject.FindObjectOfType<GemblemCompletionUnlocker> ().maybeUnlock ();
 		GameObject.FindObjectOfType<GemblemCollectorUnlocker>().maybeUnlock();
-
-
-
-
 	}
 }
