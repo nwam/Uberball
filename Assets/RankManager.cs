@@ -29,7 +29,10 @@ public class RankManager : Singleton<RankManager> {
 	private int currentScore;
 	private bool incrementScoreDisplay;
 
-	public Animator nextAnimation;
+	public GameObject newRecordText;
+
+	public GameObject overZeroGemblemAward;
+	private const string START_OVER_ZERO = "ranksDone";
 
 	// Use this for initialization
 	void Start () {
@@ -92,7 +95,7 @@ public class RankManager : Singleton<RankManager> {
 		if (gotNewRecord ()) {
 			StartCoroutine (runNewRecordAnimations ());
 		} else {
-			nextAnimation.enabled = true;
+			notifyNextAnimation ();
 		}
 	}
 
@@ -108,15 +111,10 @@ public class RankManager : Singleton<RankManager> {
 			rankObjects [rankIndex].SetActive (true);
 		} 
 
-		// unlock over-zero gemblem
-		if (oldRecord < 0 && newRecord >= 0) {
-			rankObjects [(int)Rank.bronze].GetComponent<GemblemOverZeroUnlocker> ().maybeUnlock ();
-			rankObjects [newRank].GetComponent<Animator> ().SetBool ("gemblemOverZeroAwarded", true);
-		}
-
-		// enable the score display as well
+		// enable the score display
 		scoreDisplay.enabled = true;
 		scoreDisplay.text = scoreDisplayValue.ToString ();
+		newRecordText.SetActive (true);
 
 		// start by displaying the old rank for a few seconds
 		rankObjects[rankDisplayIndex].GetComponent<Animator>().SetBool("oldRank", true);
@@ -156,5 +154,9 @@ public class RankManager : Singleton<RankManager> {
 
 			scoreDisplay.text = scoreDisplayValue.ToString();
 		}
+	}
+
+	private void notifyNextAnimation(){
+		overZeroGemblemAward.GetComponent<Animator> ().SetBool (START_OVER_ZERO, true);
 	}
 }

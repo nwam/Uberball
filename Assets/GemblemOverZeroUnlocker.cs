@@ -5,7 +5,6 @@ using UnityEngine;
 public class GemblemOverZeroUnlocker : GemblemUnlocker {
 
 	protected override void setMissionType(){
-		doAnimations = false;
 		missionType = MissionType.OverZeroPoints;
 	}
 
