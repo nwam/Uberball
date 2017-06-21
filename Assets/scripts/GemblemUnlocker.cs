@@ -19,7 +19,7 @@ public class GemblemUnlocker : MonoBehaviour {
 	private string key;
 	protected MissionType missionType;
 
-	protected enum MissionType {LevelComplete, OverZeroPoints, Collector, HiddenTreasure};
+	public enum MissionType {LevelComplete, OverZeroPoints, Collector, HiddenTreasure};
 
 	// Use this for initialization
 	void Start () {
@@ -79,12 +79,19 @@ public class GemblemUnlocker : MonoBehaviour {
 	public static int countUnlockedGemblems(string level){
 		int numUnlockedGemblems = 0;
 		foreach (MissionType missionType in System.Enum.GetValues(typeof(MissionType))){
-			if (PlayerPrefs.HasKey(level + GEMBLEM_PREFIX + missionType.ToString())){
+			if (isUnlocked(level, missionType)){
 				numUnlockedGemblems = numUnlockedGemblems + 1;
 			}
 		}
 
 		return numUnlockedGemblems;
+	}
+
+	public static bool isUnlocked(string level, MissionType missionType){
+		if (PlayerPrefs.HasKey (level + GEMBLEM_PREFIX + missionType.ToString ())) {
+			return true;
+		}
+		return false;
 	}
 
 }

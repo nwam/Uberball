@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class RankManager : Singleton<RankManager> {
 	private const float OLD_RANK_WAIT = 2.5f;
 	private const int SCORE_DISPLAY_INCREASE_FRAMES = 500;
 	private const float SCORE_DISPLAY_INCREASE_MAX = 3.5f;
 	private const float SCORE_DISPLAY_INCREASE_MIN = 0.25f;
+	private const string RANK_IDENTIFIER = "rank";
 
-	private enum Rank {platinum, gold, silver, bronze, green, purple, blue, white};
+	public enum Rank {platinum, gold, silver, bronze, green, purple, blue, white};
 
 	private GameObject[] rankObjects;
 	private int[] rankBounds;
@@ -115,6 +117,10 @@ public class RankManager : Singleton<RankManager> {
 				SCORE_DISPLAY_INCREASE_MAX,
 				(float)((float) (newRecord - oldRecord)) / SCORE_DISPLAY_INCREASE_FRAMES));
 
+
+		// store new rank
+		PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + RANK_IDENTIFIER, newRank);
+
 		// enable rank objects that we will be using
 		for (int rankIndex = oldRank; rankIndex >= newRank; rankIndex--) {
 			rankObjects [rankIndex].SetActive (true);
@@ -167,5 +173,9 @@ public class RankManager : Singleton<RankManager> {
 
 	private void notifyNextAnimation(){
 		overZeroGemblemAward.GetComponent<Animator> ().SetBool (START_OVER_ZERO, true);
+	}
+
+	public static Rank getRank(string level){
+		return (Rank)PlayerPrefs.GetInt (SceneManager.GetActiveScene ().name + RANK_IDENTIFIER);
 	}
 }
