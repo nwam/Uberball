@@ -176,6 +176,6 @@ public class RankManager : Singleton<RankManager> {
 	}
 
 	public static Rank getRank(string level){
-		return (Rank)PlayerPrefs.GetInt (SceneManager.GetActiveScene ().name + RANK_IDENTIFIER);
+		return (Rank)PlayerPrefs.GetInt (level + RANK_IDENTIFIER);
 	}
 }
