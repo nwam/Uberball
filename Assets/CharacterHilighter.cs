@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class CharacterHilighter : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		StartCoroutine (lateStart ());
+	void OnEnable(){
+		moveToSelectedCharacter ();
 	}
 
-	private IEnumerator lateStart(){
-		yield return new WaitForSeconds (0.2f);
+	private void moveToSelectedCharacter(){
 		string selectedCharacterName = PlayerPrefs.GetString (MainMenuUtils.SELECTED_CHARACTER);
-		transform.position = transform.parent.Find (selectedCharacterName).Find("img").position;
+		transform.position = transform.parent.Find (selectedCharacterName).Find ("img").position;
 	}
 
 }

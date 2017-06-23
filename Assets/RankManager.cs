@@ -92,7 +92,9 @@ public class RankManager : Singleton<RankManager> {
 	}
 
 	public void storeRank(){
-		PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + RANK_IDENTIFIER, getRankIndex(ScoreController.Instance.getScore()));
+		if (gotNewRecord ()) {
+			PlayerPrefs.SetInt (SceneManager.GetActiveScene ().name + RANK_IDENTIFIER, getRankIndex (ScoreController.Instance.getScore ()));
+		}
 	}
 
 

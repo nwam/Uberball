@@ -8,33 +8,73 @@ using UnityEngine.UI;
 public class MainMenuUtils : Singleton<MainMenuUtils> {
 	public const string SELECTED_CHARACTER = "character";
 
+	private Stack<GameObject> pageStack;
+
 	public GameObject mainMenu;
-	public GameObject levelSelect;
+	public GameObject stageSelect;
 	public GameObject characterSelect;
 	public GameObject options;
+
+	private GameObject[] menuPages;
+
+	void Start(){
+		menuPages = new GameObject[] {
+			mainMenu,
+			stageSelect,
+			characterSelect,
+			options
+		};
+		pageStack = new Stack<GameObject> ();
+
+		pushActivePage ();
+	}
+
+	// -- PAGE MANAGEMENT --
+
+	private void pushActivePage(){
+		foreach (GameObject menuPage in menuPages) {
+			if (menuPage.activeInHierarchy) {
+				pageStack.Push (menuPage);
+				break;
+			}
+		}
+	}
+
+	private void closeAllPages(){
+		foreach (GameObject menuPage in menuPages) {
+			menuPage.SetActive (false);
+		}
+	}
 
 	// -- NAVIGATION --
 
 	public void openLevelSelect() {
-		mainMenu.SetActive (false);
-		levelSelect.SetActive (true);
+		pushActivePage ();
+		closeAllPages();
+		stageSelect.SetActive (true);
 	}
 
 	public void openMainMenu() {
-		levelSelect.SetActive (false);
-		options.SetActive (false);
-		characterSelect.SetActive (false);
+		pushActivePage ();
+		closeAllPages();
 		mainMenu.SetActive (true);
 	}
 
 	public void openCharacterSelect() {
-		mainMenu.SetActive (false);
+		pushActivePage ();
+		closeAllPages();
 		characterSelect.SetActive (true);
 	}
 
 	public void openOptions() {
-		mainMenu.SetActive (false);
+		pushActivePage ();
+		closeAllPages();
 		options.SetActive (true);
+	}
+
+	public void back(){
+		closeAllPages ();
+		pageStack.Pop ().SetActive (true);
 	}
 
 	// -- MISC --

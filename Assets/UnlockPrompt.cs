@@ -5,6 +5,17 @@ using UnityEngine.UI;
 
 public class UnlockPrompt : Singleton<UnlockPrompt> {
 
+	private string[] BUTTON_TEXTS = new string[]{
+		"sounds about right",
+		"i am excited",
+		"the hype is real",
+		"it's about time",
+		"yay!",
+		"\u0304\\_(\u30C4)_/\u0304",
+		"i wasn't even trying",
+		"i broke a sweat"
+	};
+
 	private struct UnlockPromptArgs
 	{
 		public string name;
@@ -60,9 +71,11 @@ public class UnlockPrompt : Singleton<UnlockPrompt> {
 		foreach (string condition in args.conditions) {
 			conditionsString = conditionsString + "        " + '\u2714' + " " + condition + '\n';
 		}
-
 		transform.Find ("Conditions").GetComponent<Text> ().text = conditionsString;
-		gameObject.SetActive (true);
+
+		Random.seed = (int)System.DateTime.Now.Ticks;
+		string buttonText = BUTTON_TEXTS[Random.Range (0, BUTTON_TEXTS.Length - 1)];
+		transform.Find ("Button").Find ("Text").GetComponent<Text> ().text = buttonText;
 	}
 		
 	private void hide(){
