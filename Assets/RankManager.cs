@@ -91,6 +91,9 @@ public class RankManager : Singleton<RankManager> {
 		return false;
 	}
 
+	public void storeRank(){
+		PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + RANK_IDENTIFIER, getRankIndex(ScoreController.Instance.getScore()));
+	}
 
 
 
@@ -116,10 +119,6 @@ public class RankManager : Singleton<RankManager> {
 			Mathf.Min(
 				SCORE_DISPLAY_INCREASE_MAX,
 				(float)((float) (newRecord - oldRecord)) / SCORE_DISPLAY_INCREASE_FRAMES));
-
-
-		// store new rank
-		PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + RANK_IDENTIFIER, newRank);
 
 		// enable rank objects that we will be using
 		for (int rankIndex = oldRank; rankIndex >= newRank; rankIndex--) {

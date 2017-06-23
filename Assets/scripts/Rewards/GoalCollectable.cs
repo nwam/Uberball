@@ -39,5 +39,6 @@ public class GoalCollectable : MonoBehaviour {
 		GameObject.FindObjectOfType<GemblemCollectorUnlocker>().maybeUnlock();
 		GameObject.FindObjectOfType<GemblemTreasureUnlocker> ().maybeUnlock ();
 		GameObject.FindObjectOfType<GemblemOverZeroUnlocker> ().maybeUnlock ();
+		RankManager.Instance.storeRank ();
 	}
 }
