@@ -9,7 +9,6 @@ public class RankDisplay : MonoBehaviour {
 	void Start () {
 		if (GemblemUnlocker.isUnlocked (level, GemblemUnlocker.MissionType.LevelComplete)) {
 			RankManager.Rank levelRank = RankManager.getRank (level);
-			print (levelRank.ToString ());
 			transform.Find (levelRank.ToString ()).gameObject.SetActive (true);
 		}
 	}
