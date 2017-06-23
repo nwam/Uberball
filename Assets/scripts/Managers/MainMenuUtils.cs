@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MainMenuUtils : Singleton<MainMenuUtils> {
-	private const string SELECTED_CHARACTER = "character";
+	public const string SELECTED_CHARACTER = "character";
+
 	public GameObject mainMenu;
 	public GameObject levelSelect;
 	public GameObject characterSelect;
