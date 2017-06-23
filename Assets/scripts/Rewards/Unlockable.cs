@@ -3,25 +3,28 @@ using System.Collections;
 
 public class Unlockable : MonoBehaviour {
 	public string[] keyHoles;
-	public string uName;
-	public string type;
+	public string[] unlockPromptConditions;
+	public string unlockPromptName;
+	protected string unlockPromptType;
 	public Texture image;
+
 	private string promptKey;
 
 	private const string PROMPT_KEY_PREFIX = "prompt_";
 
 	void Start(){
-		promptKey = PROMPT_KEY_PREFIX + type + "_" + uName;
+		setType ();
+		promptKey = PROMPT_KEY_PREFIX + unlockPromptType + "_" + unlockPromptName;
 
 		// enable unlock if unlocked
 		if (!has_keys ()) {
-			gameObject.SetActive (false); 
+			disable ();
 		} else {
 
 			// display new unlock prompt
 			if (!PlayerPrefs.HasKey (promptKey)) {
 				PlayerPrefs.SetInt (promptKey, 1);
-				GameObject.FindObjectOfType<MainMenuUtils> ().displayUnlockPrompt (uName, type, image);
+				UnlockPrompt.Instance.maybeDisplay (unlockPromptName, unlockPromptType, unlockPromptConditions, image);
 			}
 		}
 	}
@@ -35,5 +38,13 @@ public class Unlockable : MonoBehaviour {
 		}
 
 		return true;
+	}
+
+	protected virtual void setType(){
+		unlockPromptType = "Stage";
+	}
+
+	protected virtual void disable(){
+		gameObject.SetActive (false);
 	}
 }

@@ -2,15 +2,17 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class MainMenuUtils : MonoBehaviour {
+public class MainMenuUtils : Singleton<MainMenuUtils> {
 	private const string SELECTED_CHARACTER = "character";
 	public GameObject mainMenu;
 	public GameObject levelSelect;
 	public GameObject characterSelect;
 	public GameObject options;
-	public GameObject unlockPrompt;
+
+	// -- NAVIGATION --
 
 	public void openLevelSelect() {
 		mainMenu.SetActive (false);
@@ -32,8 +34,9 @@ public class MainMenuUtils : MonoBehaviour {
 	public void openOptions() {
 		mainMenu.SetActive (false);
 		options.SetActive (true);
-		
 	}
+
+	// -- MISC --
 
 	public void startLevel(string levelName) {
 		SceneManager.LoadScene (levelName);
@@ -42,17 +45,6 @@ public class MainMenuUtils : MonoBehaviour {
 	public void selectCharacter(string characterName) {
 		PlayerPrefs.SetString (SELECTED_CHARACTER, characterName);
 		EventSystem.current.currentSelectedGameObject.transform.parent.parent.Find ("Hilighter").transform.position = EventSystem.current.currentSelectedGameObject.transform.position;
-	}
-
-	public void displayUnlockPrompt(string name, string type, Texture image){
-		unlockPrompt.transform.Find ("Name").GetComponent<Text> ().text = name;
-		unlockPrompt.transform.Find ("Title").GetComponent<Text> ().text = "New " + type + " Unlocked!";
-		unlockPrompt.transform.Find ("Image").GetComponent<RawImage> ().texture = image;
-		unlockPrompt.SetActive (true);
-	}
-
-	public void hideUnlockPrompt(){
-		unlockPrompt.SetActive (false);
 	}
 
 	public void resetProgress(){
