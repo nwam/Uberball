@@ -5,6 +5,11 @@ using UnityEngine;
 public class CharacterHilighter : MonoBehaviour {
 
 	void OnEnable(){
+		StartCoroutine (lateOnEnable ());
+	}
+
+	private IEnumerator lateOnEnable(){
+		yield return new WaitForSecondsRealtime (0.1f);
 		moveToSelectedCharacter ();
 	}
 
