@@ -14,7 +14,9 @@ public class CharacterHilighter : MonoBehaviour {
 	}
 
 	private void moveToSelectedCharacter(){
-		string selectedCharacterName = PlayerPrefs.GetString (MainMenuUtils.SELECTED_CHARACTER);
+		string selectedCharacterName = PlayerPrefs.HasKey(MainMenuUtils.SELECTED_CHARACTER) ? 
+			PlayerPrefs.GetString (MainMenuUtils.SELECTED_CHARACTER) : 
+			"null";
 		transform.position = transform.parent.Find (selectedCharacterName).Find ("img").position;
 	}
 

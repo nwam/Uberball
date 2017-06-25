@@ -74,7 +74,11 @@ public class MainMenuUtils : Singleton<MainMenuUtils> {
 
 	public void back(){
 		closeAllPages ();
-		pageStack.Pop ().SetActive (true);
+		if (pageStack.Count > 0) {
+			pageStack.Pop ().SetActive (true);
+		} else {
+			mainMenu.SetActive (true);
+		}
 	}
 
 	// -- MISC --

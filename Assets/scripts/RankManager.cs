@@ -39,6 +39,8 @@ public class RankManager : Singleton<RankManager> {
 	public GameObject overZeroGemblemAward;
 	private const string START_OVER_ZERO = "ranksDone";
 
+	public AudioClip blip;
+
 	// Use this for initialization
 	void Start () {
 		rankBounds = new int[8] {
@@ -147,6 +149,16 @@ public class RankManager : Singleton<RankManager> {
 	// Update is called once per frame
 	void Update () {
 		if (incrementScoreDisplay) {
+			
+			// increment score
+			float oldScoreDisplayValue = scoreDisplayValue;
+			scoreDisplayValue = scoreDisplayValue + scoreDisplayIncrease;
+
+			// make sound when score increments
+			if ((int) oldScoreDisplayValue < (int) scoreDisplayValue) {
+				GetComponent<AudioSource> ().PlayOneShot (blip, 0.1f);
+			}
+
 			// check if new rank has been reached
 			if (rankDisplayIndex > 0 && rankBounds [rankDisplayIndex - 1] <= scoreDisplayValue) {
 				// kill current rank object
@@ -158,10 +170,7 @@ public class RankManager : Singleton<RankManager> {
 				rankObjects [rankDisplayIndex].GetComponent<Animator> ().SetBool ("in", true);
 			}
 
-			// increment score
-			scoreDisplayValue = scoreDisplayValue + scoreDisplayIncrease;
-
-			// check if new score (display) has been reached
+			// check if the new score (in the scoreDisplay) has been reached
 			if (scoreDisplayValue >= newRecord) {
 				scoreDisplayValue = (float) newRecord;
 				rankObjects [rankDisplayIndex].GetComponent<Animator> ().SetBool ("scoreDoneIncrease", true);
