@@ -41,6 +41,15 @@ public class RankManager : Singleton<RankManager> {
 
 	public AudioClip blip;
 
+	private AudioClip[] soundClips;
+	public AudioClip platinumSound;
+	public AudioClip goldSound;
+	public AudioClip silverSound;
+	public AudioClip bronzeSound;
+	public AudioClip greenSound;
+	public AudioClip purpleSound;
+	public AudioClip blueSound;
+
 	// Use this for initialization
 	void Start () {
 		rankBounds = new int[8] {
@@ -63,6 +72,16 @@ public class RankManager : Singleton<RankManager> {
 			transform.Find(Rank.purple.ToString()).gameObject,
 			transform.Find(Rank.blue.ToString()).gameObject,
 			transform.Find(Rank.white.ToString()).gameObject
+		};
+
+		soundClips = new AudioClip[7] {
+			platinumSound,
+			goldSound,
+			silverSound,
+			bronzeSound,
+			greenSound,
+			purpleSound,
+			blueSound
 		};
 	
 		incrementScoreDisplay = false;
@@ -156,7 +175,7 @@ public class RankManager : Singleton<RankManager> {
 
 			// make sound when score increments
 			if ((int) oldScoreDisplayValue < (int) scoreDisplayValue) {
-				GetComponent<AudioSource> ().PlayOneShot (blip, 0.1f);
+				GetComponents<AudioSource> ()[0].PlayOneShot (blip, 0.1f);
 			}
 
 			// check if new rank has been reached
@@ -168,6 +187,9 @@ public class RankManager : Singleton<RankManager> {
 				--rankDisplayIndex;
 				rankObjects [rankDisplayIndex].GetComponent<Animator> ().SetBool ("scoreIncrease", true);
 				rankObjects [rankDisplayIndex].GetComponent<Animator> ().SetBool ("in", true);
+
+				// play a sound
+				GetComponents<AudioSource>()[1].PlayOneShot(soundClips[rankDisplayIndex]);
 			}
 
 			// check if the new score (in the scoreDisplay) has been reached
