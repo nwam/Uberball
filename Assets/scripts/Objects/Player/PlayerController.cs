@@ -46,7 +46,6 @@ public class PlayerController : InputController {
 		v = Input.GetAxis ("Vertical");
 		j = Input.GetAxis ("Jump");
 
-		Time.timeScale = 1.5f;
 		// get direction
 		Vector3 direction = GetDirection();
 
