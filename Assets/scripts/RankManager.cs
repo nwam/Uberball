@@ -11,10 +11,11 @@ public class RankManager : Singleton<RankManager> {
 	private const float SCORE_DISPLAY_INCREASE_MIN = 0.25f;
 	private const string RANK_IDENTIFIER = "rank";
 
-	public enum Rank {platinum, gold, silver, bronze, green, purple, blue, white};
+	public enum Rank {rainbow, platinum, gold, silver, bronze, green, purple, blue, white};
 
 	private GameObject[] rankObjects;
 	private int[] rankBounds;
+	public int rainbow;
 	public int platinum;
 	public int gold;
 	public int silver;
@@ -42,6 +43,7 @@ public class RankManager : Singleton<RankManager> {
 	public AudioClip blip;
 
 	private AudioClip[] soundClips;
+	public AudioClip rainbowSound;
 	public AudioClip platinumSound;
 	public AudioClip goldSound;
 	public AudioClip silverSound;
@@ -52,7 +54,8 @@ public class RankManager : Singleton<RankManager> {
 
 	// Use this for initialization
 	void Start () {
-		rankBounds = new int[8] {
+		rankBounds = new int[9] {
+			rainbow,
 			platinum,
 			gold,
 			silver,
@@ -63,7 +66,8 @@ public class RankManager : Singleton<RankManager> {
 			white
 		};
 			
-		rankObjects = new GameObject[8] {
+		rankObjects = new GameObject[9] {
+			transform.Find(Rank.rainbow.ToString()).gameObject,
 			transform.Find(Rank.platinum.ToString()).gameObject,
 			transform.Find(Rank.gold.ToString()).gameObject,
 			transform.Find(Rank.silver.ToString()).gameObject,
@@ -74,7 +78,8 @@ public class RankManager : Singleton<RankManager> {
 			transform.Find(Rank.white.ToString()).gameObject
 		};
 
-		soundClips = new AudioClip[7] {
+		soundClips = new AudioClip[8] {
+			rainbowSound,
 			platinumSound,
 			goldSound,
 			silverSound,
