@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class GemblemCounter: MonoBehaviour {
 
-	private string[] levels = new string[2] {
+	private string[] levels = new string[4] {
 		"TheTree",
-		"BBCliff"
+		"BBCliff",
+		"BouncyCliffs",
+		"Dragrace1"
 	};
 
 	private int startGemblems;

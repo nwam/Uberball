@@ -22,6 +22,11 @@ public class PlayerTriggers : MonoBehaviour {
 			gate.enableEffect (gameObject);
 		}
 
+		if (obj.CompareTag ("ResetGate")) {
+			ResetGate resetGate = obj.GetComponent<ResetGate> ();
+			resetGate.disableAllEffects (gameObject);
+		}
+
 		if (obj.CompareTag ("Powerup")) {
 			Powerup powerup = obj.GetComponent<Powerup> ();
 			powerup.getCollected (gameObject);

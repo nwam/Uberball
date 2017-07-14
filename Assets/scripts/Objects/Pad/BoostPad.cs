@@ -24,9 +24,7 @@ public class BoostPad : Pad {
 
 		//apply force
 		//on second loop, slow down if going over speed
-
-
-
+	
 	/**	//max speed Y
 		float speedY = (power * direction.y / rb.mass - Physics.gravity.y) / Time.fixedDeltaTime + rb.velocity.y;
 		Vector3 velocityY = new Vector3 (0, maxSpeedY > 0 && speedY > maxSpeedY ? maxSpeedY : speedY, 0);

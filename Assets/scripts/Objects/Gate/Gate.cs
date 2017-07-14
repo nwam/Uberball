@@ -64,4 +64,8 @@ public class Gate : MonoBehaviour {
 	protected virtual void setType(){
 	}
 
+	public void killGUI(){
+		effectActive = false;
+	}
+
 }

@@ -215,4 +215,8 @@ public class RankManager : Singleton<RankManager> {
 	public static Rank getRank(string level){
 		return (Rank)PlayerPrefs.GetInt (level + RANK_IDENTIFIER);
 	}
+
+	public static bool hasRank(string level){
+		return PlayerPrefs.HasKey (level + RANK_IDENTIFIER);
+	}
 }

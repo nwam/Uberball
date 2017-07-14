@@ -24,6 +24,8 @@ public class PlayerController : InputController {
 
 	private PowerupManager powerupManager;
 
+	private bool inSpace = false;
+
 	// Use this for initialization
 	protected override void afterStart () {
 		setAsActiveInputController ();
@@ -50,7 +52,7 @@ public class PlayerController : InputController {
 		Vector3 direction = GetDirection();
 
 		// add force to player
-		if (isGrounded()) {
+		if (isGrounded() && !inSpace) {
 			rb.AddForce (direction * power);
 		} else {
 			rb.AddForce (direction * power * airControlDamp);
@@ -95,7 +97,10 @@ public class PlayerController : InputController {
 	private bool isGrounded(){
 		return Physics.Raycast(transform.position, Vector3.down, distToGround);
 	}
-		
+
+	public void setInSpace(bool b){
+		inSpace = b;
+	}
 
 	// functions for orbit camera
 	public bool IsFlying(){
