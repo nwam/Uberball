@@ -68,4 +68,8 @@ public class Gate : MonoBehaviour {
 		effectActive = false;
 	}
 
+	public bool isActive(){
+		return effectActive;
+	} 
+
 }
