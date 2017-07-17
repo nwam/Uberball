@@ -4,9 +4,9 @@ using System.Collections;
 
 public class LevelManager : Singleton<LevelManager> {
 
-	private const string RESTART_KEY = "5";
+	private const string RESTART_AXIS = "Restart";
 	private const string MENU_KEY = "0";
-	private const KeyCode PAUSE_KEY = KeyCode.Escape;
+	private const string PAUSE_AXIS = "Pause";
 
 	private const float TIME_SCALE = 1.5f;
 
@@ -29,13 +29,13 @@ public class LevelManager : Singleton<LevelManager> {
 		
 	void FixedUpdate () {
 		// reset game
-		if (Input.GetKey (RESTART_KEY)) {
+		if (Input.GetAxis (RESTART_AXIS) != 0) {
 			hardReset ();		
 		}
 		if (Input.GetKey (MENU_KEY)) {
 			mainMenu ();
 		}
-		if (Input.GetKey (PAUSE_KEY)) {
+		if (Input.GetAxis (PAUSE_AXIS) != 0) {
 			pause ();
 		}
 	}

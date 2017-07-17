@@ -44,19 +44,21 @@ public class Gate : MonoBehaviour {
 			// add the effect to the effectDisplay
 			effectDisplay.addEffect(type, timeRemaining);
 
-			// decrease the remaining time
-			timeRemaining--;
+			if (LevelManager.Instance.gameState != LevelManager.GameState.paused) {
+				// decrease the remaining time
+				timeRemaining--;
 
-			// if the time is up
-			if (timeRemaining < 0) {
+				// if the time is up
+				if (timeRemaining < 0) {
 
-				// reset the effect timer and disable the effect
-				effectActive = false;
-				timeRemaining = effectTime;
-				disableEffect (player);
+					// reset the effect timer and disable the effect
+					effectActive = false;
+					timeRemaining = effectTime;
+					disableEffect (player);
 
-				// play the disable sound
-				AudioSource.PlayClipAtPoint(disableEffectSound, player.transform.position);
+					// play the disable sound
+					AudioSource.PlayClipAtPoint (disableEffectSound, player.transform.position);
+				}
 			}
 		}
 	}
