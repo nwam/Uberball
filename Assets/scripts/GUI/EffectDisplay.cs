@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EffectDisplay : MonoBehaviour {
-
 	private Text effectTextDisplay;
 	private List<string> effectList;
 
