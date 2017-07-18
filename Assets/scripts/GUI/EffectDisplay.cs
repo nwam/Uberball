@@ -15,8 +15,15 @@ public class EffectDisplay : Singleton<EffectDisplay> {
 	public Texture shapeIcon;
 	public Texture spaceIcon;
 	public Texture xctrlIcon;
-
 	public Texture blankTexture;
+
+	private Color[] effectColours;
+	public Color bounceColour;
+	public Color heavyColour;
+	public Color magnetColour;
+	public Color shapeColour;
+	public Color spaceColour;
+	public Color xctrlColour;
 
 	private Text[] times;
 	private RawImage[] icons;
@@ -39,6 +46,15 @@ public class EffectDisplay : Singleton<EffectDisplay> {
 			spaceIcon,
 			xctrlIcon
 		};
+
+		effectColours = new Color[6] {
+			bounceColour,
+			heavyColour,
+			magnetColour,
+			shapeColour,
+			spaceColour,
+			xctrlColour
+		};
 	}
 
 
@@ -59,6 +75,7 @@ public class EffectDisplay : Singleton<EffectDisplay> {
 		currentIndex += 1;
 		icons [currentIndex].texture = storedIcons [(int)type];
 		times [currentIndex].text = timeRemaining > MAX_TIME_DISPLAY ? "\u221E" : timeRemaining.ToString();
+		times [currentIndex].color = effectColours [(int)type];
 	}
 
 
