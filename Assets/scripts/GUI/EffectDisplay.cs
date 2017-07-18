@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EffectDisplay : MonoBehaviour {
+public class EffectDisplay : Singleton<EffectDisplay> {
 	private Text effectTextDisplay;
 	private List<string> effectList;
 

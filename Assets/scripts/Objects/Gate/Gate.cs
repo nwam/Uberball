@@ -8,8 +8,6 @@ public class Gate : MonoBehaviour {
 	protected string type;
 	private bool effectActive;
 	private int timeRemaining; 
-	private EffectDisplay effectDisplay;
-
 
 	private GameObject player;
 
@@ -34,14 +32,14 @@ public class Gate : MonoBehaviour {
 		setType ();
 
 		// link every gate to the StatusDisplay
-		effectDisplay = GameObject.Find ("EffectDisplay").GetComponent<EffectDisplay>();
+
 	}
 
 	void Update(){
 		// if the effect is active
 		if (effectActive) {
 			// add the effect to the effectDisplay
-			effectDisplay.addEffect (type, timeRemaining);
+			EffectDisplay.Instance.addEffect (type, timeRemaining);
 		}
 	}
 
