@@ -50,6 +50,7 @@ public class LevelManager : Singleton<LevelManager> {
 
 	// goes to main menu
 	public void mainMenu() {
+		Time.timeScale = 1.0f;
 		SceneManager.LoadScene ("MainMenu");
 	}
 
