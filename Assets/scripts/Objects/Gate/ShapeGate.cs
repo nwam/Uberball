@@ -79,6 +79,6 @@ public class ShapeGate : Gate {
 	}
 
 	protected override void setType(){
-		type = "shape";
+		type = EffectDisplay.EffectType.shape;
 	}
 }

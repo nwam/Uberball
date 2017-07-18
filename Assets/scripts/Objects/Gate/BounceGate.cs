@@ -16,7 +16,7 @@ public class BounceGate : Gate {
 	}
 
 	protected override void setType(){
-		type = "boing";
+		type = EffectDisplay.EffectType.bounce;
 	}
 
 }

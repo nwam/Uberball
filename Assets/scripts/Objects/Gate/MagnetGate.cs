@@ -17,6 +17,6 @@ public class MagnetGate : Gate {
 	}
 
 	protected override void setType(){
-		type = "mag  ";
+		type = EffectDisplay.EffectType.magnet;
 	}
 }

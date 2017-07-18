@@ -23,7 +23,7 @@ public class Magnet : MonoBehaviour {
 			timeRemain--;
 
 			// display the remaining magnet time in effecDisplay
-			effectDisplay.addEffect ("mag" + magLevel.ToString () + " ", timeRemain);
+//			effectDisplay.addEffect ("mag" + magLevel.ToString () + " ", timeRemain);
 
 			// disable magnet when time runs out
 			if (timeRemain <= 0) {

@@ -5,7 +5,7 @@ public class Gate : MonoBehaviour {
 
 	public int effectTime;
 
-	protected string type;
+	protected EffectDisplay.EffectType type;
 	private bool effectActive;
 	private int timeRemaining; 
 

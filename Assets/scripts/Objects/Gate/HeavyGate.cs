@@ -17,6 +17,6 @@ public class HeavyGate : Gate {
 
 
 	protected override void setType(){
-		type = "heavy";
+		type = EffectDisplay.EffectType.heavy;
 	}
 }

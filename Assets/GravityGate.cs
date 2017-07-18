@@ -23,6 +23,6 @@ public class GravityGate : Gate {
 	}
 
 	protected override void setType(){
-		type = "grvty";
+		type = EffectDisplay.EffectType.space;
 	}
 }

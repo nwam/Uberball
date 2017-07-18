@@ -30,6 +30,6 @@ public class SpaceGate : Gate {
 	}
 
 	protected override void setType(){
-		type = "space";
+		type = EffectDisplay.EffectType.space;
 	}
 }

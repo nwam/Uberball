@@ -21,7 +21,7 @@ public class XctrlGate : Gate {
 	}
 
 	protected override void setType(){
-		type = "xctrl";
+		type = EffectDisplay.EffectType.xctrl;
 	}
 
 }
