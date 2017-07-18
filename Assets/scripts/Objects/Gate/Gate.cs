@@ -4,7 +4,6 @@ using System.Collections;
 public class Gate : MonoBehaviour {
 
 	public int effectTime;
-	public AudioClip disableEffectSound;
 
 	protected string type;
 	private bool effectActive;
@@ -38,11 +37,17 @@ public class Gate : MonoBehaviour {
 		effectDisplay = GameObject.Find ("EffectDisplay").GetComponent<EffectDisplay>();
 	}
 
-	void Update() {
+	void Update(){
 		// if the effect is active
 		if (effectActive) {
 			// add the effect to the effectDisplay
-			effectDisplay.addEffect(type, timeRemaining);
+			effectDisplay.addEffect (type, timeRemaining);
+		}
+	}
+
+	void FixedUpdate() {
+		// if the effect is active
+		if (effectActive) {
 
 			if (LevelManager.Instance.gameState != LevelManager.GameState.paused) {
 				// decrease the remaining time
@@ -57,7 +62,7 @@ public class Gate : MonoBehaviour {
 					disableEffect (player);
 
 					// play the disable sound
-					AudioSource.PlayClipAtPoint (disableEffectSound, player.transform.position);
+					GetComponents<AudioSource>()[1].Play();
 				}
 			}
 		}
