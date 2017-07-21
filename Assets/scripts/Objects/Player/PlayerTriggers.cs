@@ -66,6 +66,10 @@ public class PlayerTriggers : MonoBehaviour {
 			treasure.getCollected();
 		}
 
+		if (obj.CompareTag ("Water")) {
+			obj.GetComponent<Water> ().applyDrag(gameObject);
+		}
+
 	}
 
 	void OnTriggerStay(Collider col) {

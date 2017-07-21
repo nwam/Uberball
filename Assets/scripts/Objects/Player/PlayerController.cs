@@ -25,6 +25,7 @@ public class PlayerController : InputController {
 	private PowerupManager powerupManager;
 
 	private bool inSpace = false;
+	private bool inWater = false;
 
 	// Use this for initialization
 	protected override void afterStart () {
@@ -52,7 +53,7 @@ public class PlayerController : InputController {
 		Vector3 direction = GetDirection();
 
 		// add force to player
-		if (isGrounded() && !inSpace) {
+		if (isGrounded() && !inSpace || inWater) {
 			rb.AddForce (direction * power);
 		} else {
 			rb.AddForce (direction * power * airControlDamp);
@@ -100,6 +101,10 @@ public class PlayerController : InputController {
 
 	public void setInSpace(bool b){
 		inSpace = b;
+	}
+
+	public void setInWater(bool b){ 
+		inWater = b;
 	}
 
 	// functions for orbit camera

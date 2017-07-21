@@ -5,7 +5,6 @@ using System.Collections;
 public class Cannon : MonoBehaviour {
 
 	public float power;
-	public AudioClip fireSound;
 
 	private CannonController cannonController;
 	private RawImage cannonCrosshair;
@@ -56,6 +55,9 @@ public class Cannon : MonoBehaviour {
 		player.GetComponent<PlayerController>().setAsActiveInputController();
 
 		// play sound
-		AudioSource.PlayClipAtPoint(fireSound, transform.position);
+		GetComponent<AudioSource>().Play();
+
+		// reset animations
+		cannonCamera.GetComponent<LinearAnimation>().reset();
 	}
 }

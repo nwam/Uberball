@@ -29,5 +29,11 @@ public class LinearAnimation : MonoBehaviour {
 
 	public void startAnimation(){
 		animate = true;
+		GetComponent<AudioSource> ().Play ();
+	}
+
+	public void reset(){
+		animate = false;
+		transform.localPosition = sourcePosition;
 	}
 }
