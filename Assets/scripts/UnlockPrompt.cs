@@ -73,7 +73,7 @@ public class UnlockPrompt : Singleton<UnlockPrompt> {
 		}
 		transform.Find ("Conditions").GetComponent<Text> ().text = conditionsString;
 
-		Random.seed = (int)System.DateTime.Now.Ticks;
+		Random.InitState((int)System.DateTime.Now.Ticks);
 		string buttonText = BUTTON_TEXTS[Random.Range (0, BUTTON_TEXTS.Length - 1)];
 		transform.Find ("Button").Find ("Text").GetComponent<Text> ().text = buttonText;
 	}

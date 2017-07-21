@@ -7,14 +7,14 @@ public class Magnet : MonoBehaviour {
 	public GameObject player;
 
 	private int timeRemain;
-	private int magLevel;
-	private EffectDisplay effectDisplay;
+//	private int magLevel;
+//	private EffectDisplay effectDisplay;
 	private float force;
 		
 	void Start() {
-		effectDisplay = GameObject.FindObjectOfType<EffectDisplay> ();
+	//	effectDisplay = GameObject.FindObjectOfType<EffectDisplay> ();
 		timeRemain = 0;
-		magLevel = 0;
+	//	magLevel = 0;
 		force = DEFAULT_FORCE;
 	}
 
@@ -28,7 +28,7 @@ public class Magnet : MonoBehaviour {
 			// disable magnet when time runs out
 			if (timeRemain <= 0) {
 				setRadius (0);
-				magLevel = 0;
+		//		magLevel = 0;
 			}
 		}
 
@@ -39,7 +39,7 @@ public class Magnet : MonoBehaviour {
 		force = DEFAULT_FORCE;
 		setRadius (radius);
 		timeRemain = magTime;
-		magLevel = lvl;
+	//	magLevel = lvl;
 	}
 
 	// enables magnet without time or printing information

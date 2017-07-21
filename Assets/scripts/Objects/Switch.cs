@@ -14,7 +14,7 @@ public class Switch : MonoBehaviour {
 		isActive = false;
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		if (isActive) {
 			updateEffect ();
 		}

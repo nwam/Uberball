@@ -35,6 +35,9 @@ public class Cannon : MonoBehaviour {
 
 		// change the controls to control the cannonCamera
 		cannonController.setAsActiveInputController();
+
+		// animate the camera
+		cannonCamera.GetComponent<LinearAnimation>().startAnimation();
 	}
 
 	public void fire(Vector3 cameraPosition, Vector3 direction) {
