@@ -66,19 +66,18 @@ public class PlayerTriggers : MonoBehaviour {
 			treasure.getCollected();
 		}
 
-		if (obj.CompareTag ("Water")) {
-			obj.GetComponent<Water> ().applyDrag(gameObject);
-		}
-
 	}
 
 	void OnTriggerStay(Collider col) {
 		GameObject obj = col.gameObject;
 
-		// pads act continuously
 		if (obj.CompareTag ("ContinuousPad")) {
 			Pad pad = obj.GetComponent<Pad> ();
 			pad.effect (gameObject);
+		}
+			
+		if (obj.CompareTag ("Water")) {
+			obj.GetComponent<Water> ().applyDrag(gameObject);
 		}
 	}
 

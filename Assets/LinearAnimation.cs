@@ -7,6 +7,8 @@ public class LinearAnimation : MonoBehaviour {
 	public Vector3 sourcePosition;
 	private Vector3 targetPosition;
 
+	private Quaternion sourceRotation;
+
 	public float animationSpeed;
 
 	private bool animate;
@@ -15,6 +17,7 @@ public class LinearAnimation : MonoBehaviour {
 		animate = false;
 		targetPosition = transform.position;
 		transform.localPosition = sourcePosition;
+		sourceRotation = transform.rotation;
 	}
 
 	void FixedUpdate(){
@@ -35,5 +38,6 @@ public class LinearAnimation : MonoBehaviour {
 	public void reset(){
 		animate = false;
 		transform.localPosition = sourcePosition;
+		transform.rotation = sourceRotation;
 	}
 }

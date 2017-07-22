@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Water : MonoBehaviour {
-	public float drag = 0.5f;
+	private float airDrag = 0.5f;
+	private float waterDrag = 5.0f;
 
 	public void applyDrag(GameObject obj){
-		obj.GetComponent<Collider>().attachedRigidbody.drag = drag;
 
-		if (drag > 1.0f) {
+		// if the object is underwater
+		if (obj.transform.position.y < transform.position.y) {
 			obj.GetComponent<PlayerController> ().setInWater (true);
+			obj.GetComponent<Collider> ().attachedRigidbody.drag = waterDrag;
 		}else{
 			obj.GetComponent<PlayerController> ().setInWater (false);
+			obj.GetComponent<Collider> ().attachedRigidbody.drag = airDrag;
 		}
 	}
 }

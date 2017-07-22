@@ -152,7 +152,7 @@ public class ThirdPersonOrbitCam : MonoBehaviour
 	}
 
 	bool ReverseViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight)
-	{
+	{/*
 		RaycastHit hit;
 
 		if(Physics.Raycast(player.position+(Vector3.up* deltaPlayerHeight), checkPos - player.position, out hit, relCameraPosMag))
@@ -161,7 +161,7 @@ public class ThirdPersonOrbitCam : MonoBehaviour
 			{
 				return false;
 			}
-		}
+		}*/
 		return true;
 	}
 
