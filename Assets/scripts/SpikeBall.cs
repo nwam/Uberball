@@ -7,19 +7,28 @@ public class SpikeBall : MonoBehaviour {
 	public float pushForce;
 	public int pointLoss;
 
-	private float resetTime = 0.2f;
+	private GameObject deltaScoreDisplay;
+
+	private float resetTime = 0.05f;
 	private float resetTimer;
 	private bool collidable = true;
+
+	void Start(){
+		deltaScoreDisplay = transform.parent.Find ("DeltaScoreDisplayContainer").gameObject;
+	}
 
 	public void collide (GameObject obj) {
 
 		if (collidable) {
 			ScoreController.Instance.addScore (-pointLoss);
 			pushAway (obj);
+			activateDeltaScoreDisplay (obj);
 
 			collidable = false;
 			resetTimer = resetTime;
 		}
+
+
 	}
 
 	private void pushAway(GameObject obj){
@@ -28,6 +37,11 @@ public class SpikeBall : MonoBehaviour {
 		direction.Normalize ();
 
 		obj.GetComponent<Rigidbody> ().AddForce (direction * pushForce);
+	}
+
+	private void activateDeltaScoreDisplay(GameObject obj){
+		deltaScoreDisplay.SetActive (false);
+		deltaScoreDisplay.SetActive (true);
 	}
 
 
