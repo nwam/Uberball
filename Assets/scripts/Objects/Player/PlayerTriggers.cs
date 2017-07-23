@@ -27,6 +27,10 @@ public class PlayerTriggers : MonoBehaviour {
 			resetGate.disableAllEffects (gameObject);
 		}
 
+		if (obj.CompareTag ("Enemy")) {
+			obj.GetComponent<SpikeBall> ().collide (gameObject);
+		}
+
 		if (obj.CompareTag ("Powerup")) {
 			Powerup powerup = obj.GetComponent<Powerup> ();
 			powerup.getCollected (gameObject);

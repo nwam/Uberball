@@ -5,6 +5,8 @@ using UnityEngine;
 public class TreasureCollectable : MonoBehaviour {
 
 	public void getCollected(){
-		gameObject.SetActive (false);
+		if (LevelManager.Instance.gameState == LevelManager.GameState.playing) {
+			gameObject.SetActive (false);
+		}
 	}
 }

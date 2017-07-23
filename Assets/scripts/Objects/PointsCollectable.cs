@@ -15,8 +15,10 @@ public class PointsCollectable : MonoBehaviour {
 	}
 
 	public void getCollected() {
-		gameObject.SetActive (false);
-		scoreController.addScore (amount);
+		if (LevelManager.Instance.gameState == LevelManager.GameState.playing) {
+			gameObject.SetActive (false);
+			scoreController.addScore (amount);
+		}
 	}
 
 	// for magnet
