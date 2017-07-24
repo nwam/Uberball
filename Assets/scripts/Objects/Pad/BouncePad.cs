@@ -9,13 +9,15 @@ public class BouncePad : Pad {
 	// Direction is always the local Y coordinate of the pad
 	protected override void setDirection() {
 		Transform t = GetComponent<Transform> ();
-		float xrot = Mathf.Deg2Rad * t.eulerAngles.x;
-		float yrot = Mathf.Deg2Rad * t.eulerAngles.y;
-		float zrot = Mathf.Deg2Rad * t.eulerAngles.z;
+		float xrot = Mathf.Deg2Rad * t.rotation.eulerAngles.x;
+		float yrot = Mathf.Deg2Rad * t.rotation.eulerAngles.y;
+		float zrot = Mathf.Deg2Rad * t.rotation.eulerAngles.z;
+
 		direction = new Vector3 (
-			-Mathf.Sin (zrot) * Mathf.Cos (yrot) + Mathf.Sin (xrot) * Mathf.Sin (yrot),
+			-Mathf.Sin (zrot) * Mathf.Cos (yrot) - Mathf.Sin (xrot) * Mathf.Sin (yrot),
 			Mathf.Cos (xrot) * Mathf.Cos (zrot), 
-			Mathf.Sin (xrot) * Mathf.Cos (yrot) - Mathf.Sin (zrot) * Mathf.Sin (yrot));
+			Mathf.Sin (xrot) * Mathf.Cos (yrot) + Mathf.Sin (zrot) * Mathf.Sin (yrot)); 
+		
 		direction.Normalize ();
 	}
 
