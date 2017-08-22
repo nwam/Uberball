@@ -5,18 +5,13 @@ using UnityEngine.UI;
 
 public class GemblemCounter: MonoBehaviour {
 
-	private string[] levels = new string[4] {
-		"TheTree",
-		"BBCliff",
-		"BouncyCliffs",
-		"Dragrace1"
-	};
-
+	private string[] levels;
 	private int startGemblems;
 	private int gemblemDisplay;
 
 	// Use this for initialization
 	void Start () {
+		levels = LevelsManager.levels;
 		startGemblems = countTotalGemblems ();
 		gemblemDisplay = startGemblems;
 		setText (gemblemDisplay);

@@ -51,17 +51,28 @@ public class PlayerController : InputController {
 
 		// get direction
 		Vector3 direction = GetDirection();
-
 		// add force to player
 		if (isGrounded() && !inSpace || inWater) {
 			rb.AddForce (direction * power);
+
 		} else {
 			rb.AddForce (direction * power * airControlDamp);
 		}
 
 		// calculate velocity
+		// TODO: velocity is a field in rb
 		velocity = transform.position - oldPos;
 		oldPos = transform.position;
+
+		// add extra force for more velocity
+		/*
+		float extraVelocityTorque = velocity.magnitude;
+		float extraVelocityForce = logisticForExtraPower (rb.velocity.magnitude) * power/2.0f;
+		print(logisticForExtraPower(rb.velocity.magnitude));
+		*/
+		//rb.AddTorque (new Vector3(direction.z, 0, -direction.x) * extraVelocityTorque);
+		//rb.AddForce (direction * extraVelocityForce);
+			
 
 		// use a powerup
 		if (j != 0 && powerupManager.powerLevel > 0 && powerupManager.powerup != null) {
@@ -118,5 +129,9 @@ public class PlayerController : InputController {
 
 	public bool IsSprinting(){
 		return false;
+	}
+
+	private static float logisticForExtraPower(float x){
+		return 1.0f / (1.0f + Mathf.Exp (-0.2f * (x - 15.0f)));
 	}
 }

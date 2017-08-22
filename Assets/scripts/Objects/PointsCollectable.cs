@@ -15,7 +15,8 @@ public class PointsCollectable : MonoBehaviour {
 	}
 
 	public void getCollected() {
-		if (LevelManager.Instance.gameState == LevelManager.GameState.playing) {
+		if (LevelManager.Instance.gameState == LevelManager.GameState.playing ||
+			LevelManager.Instance.gameState == LevelManager.GameState.countdown) {
 			gameObject.SetActive (false);
 			scoreController.addScore (amount);
 		}
