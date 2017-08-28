@@ -70,6 +70,11 @@ public class PlayerTriggers : MonoBehaviour {
 			treasure.getCollected();
 		}
 
+		if (obj.CompareTag ("FollowCamMod")) {
+			FollowCamModifier fcm = obj.GetComponent<FollowCamModifier> ();
+			fcm.modifyCamera ();
+		}
+
 	}
 
 	void OnTriggerStay(Collider col) {

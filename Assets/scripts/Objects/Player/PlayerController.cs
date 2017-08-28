@@ -4,6 +4,8 @@ using System.Collections;
 // determines player physics on input
 public class PlayerController : InputController {
 
+	public float TOUCH_RANGE = 50f;
+
 	public float power = 100f;
 	private float airControlDamp = 0.2f;
 	private float distToGround = 0.85f; 
@@ -27,6 +29,8 @@ public class PlayerController : InputController {
 	private bool inSpace = false;
 	private bool inWater = false;
 
+	private Vector2 touchOrigin = -Vector2.one;
+
 	// Use this for initialization
 	protected override void afterStart () {
 		setAsActiveInputController ();
@@ -44,11 +48,25 @@ public class PlayerController : InputController {
 
 	// Called before any physics calculations
 	public override void applyInputFixed() {
-
+	  //#if UNITY_STANDALONE
 		h = Input.GetAxis ("Horizontal");
 		v = Input.GetAxis ("Vertical");
 		j = Input.GetAxis ("Jump");
+	  //#else
 
+		if (Input.touchCount > 0){
+			Touch touch = Input.GetTouch(0);
+
+			if (touch.phase == TouchPhase.Began){
+				touchOrigin = touch.position;
+			}
+				
+
+			h = (touch.position.x - touchOrigin.x);
+			v = (touch.position.y - touchOrigin.y);
+		}
+
+	  //#endif
 		// get direction
 		Vector3 direction = GetDirection();
 		// add force to player
