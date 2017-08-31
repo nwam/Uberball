@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class RankManager : Singleton<RankManager> {
-	private const float OLD_RANK_WAIT = 2.5f;
-	private const int SCORE_DISPLAY_INCREASE_FRAMES = 500;
-	private const float SCORE_DISPLAY_INCREASE_MAX = 3.5f;
-	private const float SCORE_DISPLAY_INCREASE_MIN = 0.25f;
+	private const float OLD_RANK_WAIT = 1.5f;
+	private const int SCORE_DISPLAY_INCREASE_FRAMES = 200;
+	private const float SCORE_DISPLAY_INCREASE_MAX = 10.0f;
+	private const float SCORE_DISPLAY_INCREASE_MIN = 0.20f;
 	private const string RANK_IDENTIFIER = "rank";
 
 	public enum Rank {rainbow, platinum, gold, silver, bronze, green, purple, blue, white};
@@ -142,6 +142,7 @@ public class RankManager : Singleton<RankManager> {
 		scoreDisplayValue = (float) (oldRecord < rankBounds [(int)Rank.white] ? rankBounds [(int)Rank.white] : oldRecord);
 		rankDisplayIndex = oldRank;
 
+		// calculate the amount the score will increase each frame
 		scoreDisplayIncrease = Mathf.Max(
 			SCORE_DISPLAY_INCREASE_MIN,
 			Mathf.Min(

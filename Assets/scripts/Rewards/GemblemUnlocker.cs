@@ -57,7 +57,6 @@ public class GemblemUnlocker : MonoBehaviour {
 			skipAnimation ();
 		} else {
 			showAnimation ();
-
 		}
 	}
 
