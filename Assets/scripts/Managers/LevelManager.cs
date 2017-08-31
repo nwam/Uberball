@@ -1,8 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LevelManager : Singleton<LevelManager> {
+	
+	public enum GameState { 
+		intro,
+		countdown,
+		playing,
+		paused,
+		complete
+	};
 
 	private const string RESTART_AXIS = "Restart";
 	private const string MENU_KEY = "0";
@@ -11,14 +20,12 @@ public class LevelManager : Singleton<LevelManager> {
 	private const float TIME_SCALE = 1.5f;
 
 	public GameObject pauseMenu;
-
-	public enum GameState { 
-		intro,
-		countdown,
-		playing,
-		paused,
-		complete
+	private GameState prePauseState;
+	private List<GameState> pausableStates = new List<GameState>{
+		GameState.countdown,
+		GameState.playing
 	};
+
 
 	public GameState gameState { get; set;}
 
@@ -65,18 +72,39 @@ public class LevelManager : Singleton<LevelManager> {
 	// action is happening
 	public void play(){
 		Time.timeScale = TIME_SCALE;
-		pauseMenu.SetActive (false);
-
 		gameState = GameState.playing;
 		ScoreController.Instance.resume ();
 		InputManager.Instance.enableInput ();
 	}
 
+	// action is about to happen
+	public void countdown(){
+		Time.timeScale = TIME_SCALE;
+		gameState = GameState.countdown;
+		ScoreController.Instance.resume ();
+	}
+
 	// pause menu
 	public void pause(){
-		pauseMenu.SetActive (true);
-		gameState = GameState.paused;
-		Time.timeScale = 0.0f;
+		if (pausableStates.Contains (gameState)) {
+			prePauseState = gameState;
+			pauseMenu.SetActive (true);
+			gameState = GameState.paused;
+			Time.timeScale = 0.0f;
+		}
+	}
+
+	// from pause menu
+	public void resume(){
+		pauseMenu.SetActive (false);
+		switch (prePauseState){
+		case GameState.countdown:
+			countdown();
+			break;
+		default:
+			play();
+			break;
+		}
 	}
 
 	// level complete/ score gui
