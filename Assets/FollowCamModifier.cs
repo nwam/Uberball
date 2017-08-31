@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FollowCamModifier : MonoBehaviour {
 	private LocationBasedFollowCam cam;
-	private bool commence;
-	private bool modifyingCamera;
 
 	private float startTime;
 	public float duration;
@@ -17,32 +15,31 @@ public class FollowCamModifier : MonoBehaviour {
 
 
 	void Start(){
+
+		foreach (FollowCamModifier fcm in GameObject.FindObjectsOfType<FollowCamModifier>()){
+			if (this != fcm) {
+				fcm.enabled = false;
+			}
+		}
+
 		cam = LocationBasedFollowCam.Instance;
-		commence = false;
-		modifyingCamera = false;
 
 		startCameraOffset = cam.cameraOffset;
 		startCameraRotation = cam.cameraRotation;
+
+		startTime = Time.time;
 	}
 		
 	void Update(){
-		if (commence) {
-			startTime = Time.time;
-			commence = false;
-			modifyingCamera = true;
-		}
+		float t = (Time.time - startTime) / duration;
+		cam.cameraOffset = new Vector2 (Mathf.SmoothStep (startCameraOffset.x, endCameraOffset.x, t),
+			                            Mathf.SmoothStep (startCameraOffset.y, endCameraOffset.y, t));
+		cam.cameraRotation = new Vector2 (Mathf.SmoothStep (startCameraRotation.x, endCameraRotation.x, t),
+								          Mathf.SmoothStep (startCameraRotation.y, endCameraRotation.y, t));
 
-		if (modifyingCamera) {
-			float t = (Time.time - startTime) / duration;
-			cam.cameraOffset = new Vector2 (Mathf.SmoothStep (startCameraOffset.x, endCameraOffset.x, t),
-				                            Mathf.SmoothStep (startCameraOffset.y, endCameraOffset.y, t));
-			cam.cameraRotation = new Vector2 (Mathf.SmoothStep (startCameraRotation.x, endCameraRotation.x, t),
-									          Mathf.SmoothStep (startCameraRotation.y, endCameraRotation.y, t));
+		if (t >= 1) {
+			enabled = false;
 		}
-	}
-
-	public void modifyCamera(){
-		commence = true;
 	}
 
 }

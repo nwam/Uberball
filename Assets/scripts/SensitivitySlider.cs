@@ -6,13 +6,11 @@ using UnityEngine.UI;
 public class SensitivitySlider : Sensitivity {
 	private const string SLIDER_TEXT_PREFIX = "sensitivity ";
 
-	private Slider slider;
-	private Text sliderText;
+	public Slider slider;
+	public Text sliderText;
 
 	// Use this for initialization
 	void Start () {
-		slider = GetComponentInChildren<Slider> ();
-		sliderText = GetComponentInChildren<Text> ();
 
 		slider.onValueChanged.AddListener (delegate {
 			updateSensitivity ();

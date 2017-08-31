@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ThirdPersonOrbitCam : MonoBehaviour 
+public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam> 
 {
 	public Transform player;
 	public Texture2D crosshair;
