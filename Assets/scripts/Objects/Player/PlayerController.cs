@@ -62,8 +62,8 @@ public class PlayerController : InputController {
 			}
 				
 
-			h = (touch.position.x - touchOrigin.x);
-			v = (touch.position.y - touchOrigin.y);
+			h = (touch.position.x - touchOrigin.x)/TOUCH_RANGE;
+			v = (touch.position.y - touchOrigin.y)/TOUCH_RANGE;
 		}
 
 	  //#endif
