@@ -72,7 +72,7 @@ public class PlayerTriggers : MonoBehaviour {
 
 		if (obj.CompareTag ("FollowCamMod")) {
 			FollowCamModifier fcm = obj.GetComponent<FollowCamModifier> ();
-			fcm.enabled = true;
+			fcm.animateCamera();
 		}
 
 	}
