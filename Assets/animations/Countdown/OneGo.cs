@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class OneGo : StateMachineBehaviour {
 
-	public GameObject go;
-
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	//
@@ -18,7 +16,6 @@ public class OneGo : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		Instantiate (go, Vector3.zero, Quaternion.Euler(Vector3.zero), GameObject.Find("Canvas").transform);
 		LevelManager.Instance.play ();
 	}
 
