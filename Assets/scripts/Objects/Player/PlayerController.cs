@@ -29,13 +29,20 @@ public class PlayerController : InputController {
 	private bool inSpace = false;
 	private bool inWater = false;
 
+	private Vector2 NULL_TOUCH_POS = -Vector2.one;
 	private Vector2 touchOrigin = -Vector2.one;
+	private Touch movementTouch;
+	private const int NULL_TOUCH_INDEX = -1;
+	private int movementTouchIndex = NULL_TOUCH_INDEX;
+
+	
 
 	// Use this for initialization
 	protected override void afterStart () {
 		setAsActiveInputController ();
 		rb = GetComponent<Rigidbody>();
 		powerupManager = GameObject.FindObjectOfType<PowerupManager> (); 
+		movementTouch.position = NULL_TOUCH_POS;
 	}
 
 	void Awake() {
@@ -54,16 +61,29 @@ public class PlayerController : InputController {
 		j = Input.GetAxis ("Jump");
 	  //#else
 
+		// touch input
 		if (Input.touchCount > 0){
-			Touch touch = Input.GetTouch(0);
 
-			if (touch.phase == TouchPhase.Began){
-				touchOrigin = touch.position;
+			// orbitcam mode
+			if (CameraType.getCameraType() == CameraType.CamType.orbit) {
+				movementTouch = getMovementTouch ();
+			} 
+
+			// autocam mode
+			else {
+				movementTouch = Input.GetTouch(0);
 			}
-				
 
-			h = (touch.position.x - touchOrigin.x)/TOUCH_RANGE;
-			v = (touch.position.y - touchOrigin.y)/TOUCH_RANGE;
+			// apply touch as input
+			if (!movementTouch.position.Equals(NULL_TOUCH_POS)) {
+				if (movementTouch.phase == TouchPhase.Began) {
+					touchOrigin = movementTouch.position;
+				}
+
+				h = (movementTouch.position.x - touchOrigin.x) / TOUCH_RANGE;
+				v = (movementTouch
+					.position.y - touchOrigin.y) / TOUCH_RANGE;
+			}
 		}
 
 	  //#endif
@@ -90,7 +110,7 @@ public class PlayerController : InputController {
 		*/
 		//rb.AddTorque (new Vector3(direction.z, 0, -direction.x) * extraVelocityTorque);
 		//rb.AddForce (direction * extraVelocityForce);
-			
+		
 
 		// use a powerup
 		if (j != 0 && powerupManager.powerLevel > 0 && powerupManager.powerup != null) {
@@ -151,5 +171,36 @@ public class PlayerController : InputController {
 
 	private static float logisticForExtraPower(float x){
 		return 1.0f / (1.0f + Mathf.Exp (-0.2f * (x - 15.0f)));
+	}
+
+
+	private Touch getMovementTouch(){
+		// nullify the movement touch index if that touch became inactive 
+		if ((movementTouchIndex > NULL_TOUCH_INDEX && movementTouchIndex < Input.touchCount) &&
+			    (Input.GetTouch(movementTouchIndex).phase == TouchPhase.Canceled || 
+				Input.GetTouch(movementTouchIndex).phase == TouchPhase.Ended)) {
+			movementTouchIndex = NULL_TOUCH_INDEX;
+		}
+
+		// get a new touch index from left side of screen 
+		// only if the current touch index is null
+		if (movementTouchIndex == NULL_TOUCH_INDEX) {
+			for (int i = 0; i < Input.touchCount; i++) {
+				Touch t = Input.GetTouch (i); 
+				if (t.position.x < Screen.width / 2 && t.phase == TouchPhase.Began) {
+					movementTouchIndex = i;
+					break;
+				}
+			}
+		}
+
+		// get the new touch
+		if (movementTouchIndex > NULL_TOUCH_INDEX && movementTouchIndex < Input.touchCount) {
+			movementTouch = Input.GetTouch (movementTouchIndex);
+		} else {
+			movementTouch.position = NULL_TOUCH_POS;
+		}
+
+		return movementTouch;
 	}
 }

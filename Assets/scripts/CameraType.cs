@@ -26,7 +26,7 @@ public class CameraType : MonoBehaviour {
 		}
 	}
 
-	protected CamType getCameraType(){
+	public static CamType getCameraType(){
 		return PlayerPrefs.HasKey(CAMTYPE_KEY) ? (CamType)PlayerPrefs.GetInt (CAMTYPE_KEY) : DEFAULT_CAMTYPE;
 	}
 

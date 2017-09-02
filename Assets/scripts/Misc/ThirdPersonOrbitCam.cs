@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam> 
 {
+	private const float TOUCH_RANGE = 400f; // in pixels
+
 	public Transform player;
 	public Texture2D crosshair;
 	
@@ -40,6 +42,11 @@ public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam>
 	private float defaultFOV;
 	private float targetFOV;
 
+	// touch input
+	private Vector2 orbitTouchOrigin = -Vector2.one;
+	private const int NULL_TOUCH_INDEX = -1;
+	private int orbitTouchIndex = NULL_TOUCH_INDEX;
+
 	void Awake()
 	{
 		cam = transform;
@@ -56,13 +63,21 @@ public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam>
 
 	void LateUpdate()
 	{
+		// get inputs from mouse
 		float mouseX = Mathf.Clamp (Input.GetAxis ("Mouse X"), -1, 1) * horizontalAimingSpeed * Time.deltaTime;
 		float mouseY = Mathf.Clamp (Input.GetAxis ("Mouse Y"), -1, 1) * verticalAimingSpeed * Time.deltaTime;
+		// get inputs from joystick
 		float rjoyX = Mathf.Clamp(Input.GetAxis("xboxRJoyX"), -1, 1) * horizontalAimingSpeed * Time.deltaTime;
 		float rjoyY = -1* Mathf.Clamp(Input.GetAxis("xboxRJoyY"), -1, 1) * verticalAimingSpeed * Time.deltaTime;
+		// get inputs from touch
+		Vector2 touchMovement = getOrbitTouchMovement()/TOUCH_RANGE;
 
-		angleH += Mathf.Abs (mouseX) > Mathf.Abs (rjoyX) ? mouseX : rjoyX;
-		angleV += Mathf.Abs (mouseY) > Mathf.Abs (rjoyY) ? mouseY : rjoyY;
+		float rTouchX = Mathf.Clamp(touchMovement.x, -1, 1) * horizontalAimingSpeed * Time.deltaTime;
+		float rTouchY = Mathf.Clamp(touchMovement.y, -1, 1) * verticalAimingSpeed * Time.deltaTime;
+
+		// apply inputs
+		angleH += mouseX + rjoyX + rTouchX;
+		angleV += mouseY + rjoyY + rTouchY;
 
 		// fly
 		if(playerController.IsFlying())
@@ -174,4 +189,40 @@ public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam>
 			                         Screen.height/2-(crosshair.height*0.5f), 
 			                         crosshair.width, crosshair.height), crosshair);
 	}
+
+
+
+	// touch input
+	private Vector2 getOrbitTouchMovement(){
+
+		// nullify the orbitcam's movement touch if it is inactive
+		if ((orbitTouchIndex > NULL_TOUCH_INDEX && orbitTouchIndex < Input.touchCount) &&
+			(Input.GetTouch(orbitTouchIndex).phase == TouchPhase.Canceled || 
+				Input.GetTouch(orbitTouchIndex).phase == TouchPhase.Ended)) {
+			orbitTouchIndex = NULL_TOUCH_INDEX;
+		}
+
+
+		// get a new touch index from right side of screen 
+		// only if the currentTouch is null
+		if (orbitTouchIndex == NULL_TOUCH_INDEX) {
+			for (int i = 0; i < Input.touchCount; i++) {
+				Touch t = Input.GetTouch (i); 
+				if (t.position.x > Screen.width / 2 && t.phase == TouchPhase.Began) {
+					orbitTouchIndex = i;
+					orbitTouchOrigin = t.position;
+					break;
+				}
+			}
+		}
+
+		// return the touche's movement
+		if (orbitTouchIndex > NULL_TOUCH_INDEX && orbitTouchIndex < Input.touchCount) {
+			return Input.GetTouch (orbitTouchIndex).position - orbitTouchOrigin;
+		}
+
+		return Vector2.zero;
+	}
+
+
 }
