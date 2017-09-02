@@ -32,9 +32,6 @@ public class PlayerController : InputController {
 	private Vector2 NULL_TOUCH_POS = -Vector2.one;
 	private Vector2 touchOrigin = -Vector2.one;
 	private Touch movementTouch;
-	private const int NULL_TOUCH_INDEX = -1;
-	private int movementTouchIndex = NULL_TOUCH_INDEX;
-
 	
 
 	// Use this for initialization
@@ -175,32 +172,19 @@ public class PlayerController : InputController {
 
 
 	private Touch getMovementTouch(){
-		// nullify the movement touch index if that touch became inactive 
-		if ((movementTouchIndex > NULL_TOUCH_INDEX && movementTouchIndex < Input.touchCount) &&
-			    (Input.GetTouch(movementTouchIndex).phase == TouchPhase.Canceled || 
-				Input.GetTouch(movementTouchIndex).phase == TouchPhase.Ended)) {
-			movementTouchIndex = NULL_TOUCH_INDEX;
-		}
+		Touch mt = new Touch();
+		mt.position = NULL_TOUCH_POS;
 
 		// get a new touch index from left side of screen 
 		// only if the current touch index is null
-		if (movementTouchIndex == NULL_TOUCH_INDEX) {
-			for (int i = 0; i < Input.touchCount; i++) {
-				Touch t = Input.GetTouch (i); 
-				if (t.position.x < Screen.width / 2 && t.phase == TouchPhase.Began) {
-					movementTouchIndex = i;
-					break;
-				}
+		for (int i = 0; i < Input.touchCount; i++) {
+			Touch t = Input.GetTouch (i); 
+			if (t.position.x < Screen.width / 2) {
+				mt = t;
+				break;
 			}
 		}
 
-		// get the new touch
-		if (movementTouchIndex > NULL_TOUCH_INDEX && movementTouchIndex < Input.touchCount) {
-			movementTouch = Input.GetTouch (movementTouchIndex);
-		} else {
-			movementTouch.position = NULL_TOUCH_POS;
-		}
-
-		return movementTouch;
+		return mt;
 	}
 }

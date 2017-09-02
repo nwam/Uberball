@@ -43,9 +43,8 @@ public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam>
 	private float targetFOV;
 
 	// touch input
-	private Vector2 orbitTouchOrigin = -Vector2.one;
-	private const int NULL_TOUCH_INDEX = -1;
-	private int orbitTouchIndex = NULL_TOUCH_INDEX;
+	private static Vector2 NULL_TOUCH_POS = -Vector2.one;
+	private Vector2 orbitTouchOrigin = NULL_TOUCH_POS;
 
 	void Awake()
 	{
@@ -194,31 +193,27 @@ public class ThirdPersonOrbitCam : Singleton<ThirdPersonOrbitCam>
 
 	// touch input
 	private Vector2 getOrbitTouchMovement(){
-
-		// nullify the orbitcam's movement touch if it is inactive
-		if ((orbitTouchIndex > NULL_TOUCH_INDEX && orbitTouchIndex < Input.touchCount) &&
-			(Input.GetTouch(orbitTouchIndex).phase == TouchPhase.Canceled || 
-				Input.GetTouch(orbitTouchIndex).phase == TouchPhase.Ended)) {
-			orbitTouchIndex = NULL_TOUCH_INDEX;
-		}
+		Touch ot = new Touch ();
+		ot.position = NULL_TOUCH_POS;
 
 
 		// get a new touch index from right side of screen 
 		// only if the currentTouch is null
-		if (orbitTouchIndex == NULL_TOUCH_INDEX) {
-			for (int i = 0; i < Input.touchCount; i++) {
-				Touch t = Input.GetTouch (i); 
-				if (t.position.x > Screen.width / 2 && t.phase == TouchPhase.Began) {
-					orbitTouchIndex = i;
-					orbitTouchOrigin = t.position;
-					break;
+		for (int i = 0; i < Input.touchCount; i++) {
+			Touch t = Input.GetTouch (i); 
+			if (t.position.x > Screen.width / 2) {
+				ot = t;
+				if (ot.phase == TouchPhase.Began) {
+					orbitTouchOrigin = ot.position;
 				}
+				break;
 			}
 		}
 
-		// return the touche's movement
-		if (orbitTouchIndex > NULL_TOUCH_INDEX && orbitTouchIndex < Input.touchCount) {
-			return Input.GetTouch (orbitTouchIndex).position - orbitTouchOrigin;
+
+		// return the touche's relative position
+		if (ot.position != NULL_TOUCH_POS) {
+			return ot.position - orbitTouchOrigin;
 		}
 
 		return Vector2.zero;
