@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class LevelsManager : Singleton<LevelsManager> {
 
-	public static string[] levels = new string[5] {
+	public static string[] levels = new string[7] {
 		"TheTree",
+		"MovingFast",
+		"Hops101",
 		"BouncyCliffs",
 		"Dragrace1",
 		"Gates",

@@ -8,7 +8,7 @@ public class FollowCamModifier : MonoBehaviour {
 	private float startTime;
 	public float duration;
 
-	public bool animating = false;
+	private bool animating = false;
 
 	private Vector2 startCameraOffset;
 	private Vector2 startCameraRotation;

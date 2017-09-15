@@ -10,7 +10,7 @@ public class UnlockableComponent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		if (!PlayerPrefs.HasKey (key)) {
-			gameObject.GetComponent<RawImage> ().enabled = false;
+			gameObject.SetActive (false);
 		}
 	}
 }
