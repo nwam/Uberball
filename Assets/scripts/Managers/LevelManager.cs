@@ -52,6 +52,7 @@ public class LevelManager : Singleton<LevelManager> {
 
 	// Resets the current level
 	public void hardReset(){
+		Logger.log ("reset");
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
@@ -71,6 +72,7 @@ public class LevelManager : Singleton<LevelManager> {
 */
 	// action is happening
 	public void play(){
+		Logger.log ("play");
 		Time.timeScale = TIME_SCALE;
 		gameState = GameState.playing;
 		ScoreController.Instance.resume ();
@@ -86,6 +88,7 @@ public class LevelManager : Singleton<LevelManager> {
 
 	// pause menu
 	public void pause(){
+		Logger.log ("pause");
 		if (pausableStates.Contains (gameState)) {
 			prePauseState = gameState;
 			pauseMenu.SetActive (true);
@@ -109,6 +112,7 @@ public class LevelManager : Singleton<LevelManager> {
 
 	// level complete/ score gui
 	public void complete(){
+		Logger.log ("level complete");
 		gameState = GameState.complete;
 		InputManager.Instance.disableInput ();
 		GUIManager.Instance.activateFinish ();
